@@ -1,5 +1,5 @@
-// Sidebar.tsx
 import { useState } from "react";
+import Link from "next/link"; // 导入 Link 组件
 import {
   ListboxItem,
   Listbox,
@@ -13,6 +13,7 @@ import type { Selection } from "@nextui-org/react";
 interface ModelItem {
   key: string;
   label: string;
+  href: string; // 添加 href 属性，用于路由跳转
 }
 
 interface ModelCategory {
@@ -29,38 +30,38 @@ const modelCategories: ModelCategory[] = [
   {
     title: "Chat Models",
     models: [
-      { key: "gpt-4", label: "GPT-4" },
-      { key: "gpt-3.5", label: "GPT-3.5" },
-      { key: "llama-2", label: "LLaMA 2" },
-      { key: "claude", label: "Claude" },
-      { key: "palm", label: "PaLM" },
-    ]
+      { key: "gpt-4", label: "GPT-4", href: "/models/gpt-4" },
+      { key: "gpt-3.5", label: "GPT-3.5", href: "/models/gpt-3.5" },
+      { key: "llama-2", label: "LLaMA 2", href: "/models/llama-2" },
+      { key: "claude", label: "Claude", href: "/models/claude" },
+      { key: "palm", label: "PaLM", href: "/models/palm" },
+    ],
   },
   {
     title: "Audio Models",
     models: [
-      { key: "whisper", label: "Whisper" },
-      { key: "bark", label: "Bark" },
-      { key: "musicgen", label: "MusicGen" },
-      { key: "audiogen", label: "AudioGen" },
-    ]
+      { key: "whisper", label: "Whisper", href: "/models/whisper" },
+      { key: "bark", label: "Bark", href: "/models/bark" },
+      { key: "musicgen", label: "MusicGen", href: "/models/musicgen" },
+      { key: "audiogen", label: "AudioGen", href: "/models/audiogen" },
+    ],
   },
   {
     title: "Vision Models",
     models: [
-      { key: "dalle-3", label: "DALL·E 3" },
-      { key: "stable-diffusion", label: "Stable Diffusion" },
-      { key: "midjourney", label: "Midjourney" },
-    ]
+      { key: "dalle-3", label: "DALL·E 3", href: "/models/dalle-3" },
+      { key: "stable-diffusion", label: "Stable Diffusion", href: "/models/stable-diffusion" },
+      { key: "midjourney", label: "Midjourney", href: "/models/midjourney" },
+    ],
   },
   {
     title: "Versions",
     models: [
-      { key: "v1", label: "Version 1.0" },
-      { key: "v2", label: "Version 2.0" },
-      { key: "v3", label: "Version 3.0" },
-    ]
-  }
+      { key: "v1", label: "Version 1.0", href: "/versions/v1" },
+      { key: "v2", label: "Version 2.0", href: "/versions/v2" },
+      { key: "v3", label: "Version 3.0", href: "/versions/v3" },
+    ],
+  },
 ];
 
 // 主导航链接
@@ -83,13 +84,13 @@ const Sidebar = ({ className }: SidebarProps) => {
         {/* 主导航链接 */}
         <nav className="flex flex-col p-4 gap-2">
           {mainNavLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="flex items-center gap-2 p-2 rounded hover:bg-content2"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -124,9 +125,11 @@ const Sidebar = ({ className }: SidebarProps) => {
                     key={model.key}
                     className="rounded-md data-[hover=true]:bg-content2"
                   >
-                    <span className="text-foreground">
-                      {model.label}
-                    </span>
+                    <Link href={model.href} className="w-full">
+                      <span className="text-foreground">
+                        {model.label}
+                      </span>
+                    </Link>
                   </ListboxItem>
                 ))}
               </Listbox>

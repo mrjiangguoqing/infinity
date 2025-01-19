@@ -1,5 +1,5 @@
 // NavigationBar.tsx
-import UserAvatarWrapper from "@/app/components/UserAvatarWrapper"
+//import UserAvatarWrapper from "@/app/components/UserAvatarWrapper"
 
 
 import {
@@ -107,7 +107,8 @@ export function NavigationBar({ className }: NavigationBarProps) {
           </Button>
         </NavbarItem>
         <NavbarItem>
-          <UserAvatarWrapper />
+          {/* 右侧用户按钮 */}
+         {/*<UserAvatarWrapper />*/}
         </NavbarItem>
       </NavbarContent>
     </Navbar>

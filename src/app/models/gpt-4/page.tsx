@@ -1,4 +1,7 @@
+//这个页面到时候整合chatbot
+
 // pages/Chatbot.tsx
+"use client"
 import React, { useState } from 'react';
 
 interface Message {
