@@ -1,4 +1,7 @@
 // NavigationBar.tsx
+import UserAvatarWrapper from "@/app/components/UserAvatarWrapper"
+
+
 import {
   Navbar,
   NavbarBrand,
@@ -7,7 +10,6 @@ import {
   Button,
   Link,
 } from "@nextui-org/react";
-import  UserDropdown  from "./UserDropdown";
 
 interface NavigationBarProps {
   className?: string;
@@ -105,7 +107,7 @@ export function NavigationBar({ className }: NavigationBarProps) {
           </Button>
         </NavbarItem>
         <NavbarItem>
-          <UserDropdown />
+          <UserAvatarWrapper />
         </NavbarItem>
       </NavbarContent>
     </Navbar>
