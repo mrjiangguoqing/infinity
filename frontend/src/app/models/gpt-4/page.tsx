@@ -1,100 +1,27 @@
-//这个页面到时候整合chatbot
 
-// pages/Chatbot.tsx
-"use client"
-import React, { useState } from 'react';
+'use client';
 
-interface Message {
-  id: number;
-  text: string;
-  sender: 'user' | 'bot';
-  timestamp: Date;
-}
+import { useChat } from 'ai/react';
 
-function Chatbot() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [inputText, setInputText] = useState('');
-
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputText.trim()) return;
-
-    // 添加用户消息
-    const userMessage: Message = {
-      id: Date.now(),
-      text: inputText,
-      sender: 'user',
-      timestamp: new Date(),
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-
-    // 模拟机器人回复
-    setTimeout(() => {
-      const botMessage: Message = {
-        id: Date.now() + 1,
-        text: `这是对 "${inputText}" 的自动回复`,
-        sender: 'bot',
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, botMessage]);
-    }, 1000);
-
-    setInputText('');
-  };
-
+export default function Chat2() {
+  const { messages, input, handleInputChange, handleSubmit } = useChat();
   return (
-    <div className="flex flex-col h-screen max-w-4xl mx-auto">
-      <div className="bg-white p-4 shadow-md">
-        <h1 className="text-2xl font-bold">聊天机器人</h1>
-      </div>
-
-      {/* 消息列表 */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex ${
-              message.sender === 'user' ? 'justify-end' : 'justify-start'
-            }`}
-          >
-            <div
-              className={`max-w-[70%] rounded-lg p-3 ${
-                message.sender === 'user'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-200'
-              }`}
-            >
-              <p>{message.text}</p>
-              <span className="text-xs opacity-70">
-                {message.timestamp.toLocaleTimeString()}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* 输入框 */}
-      <form onSubmit={handleSendMessage} className="p-4 border-t">
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            className="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="输入消息..."
-          />
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-          >
-            发送
-          </button>
+    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
+      {messages.map(m => (
+        <div key={m.id} className="whitespace-pre-wrap">
+          {m.role === 'user' ? 'User: ' : 'AI: '}
+          {m.content}
         </div>
+      ))}
+
+      <form onSubmit={handleSubmit}>
+        <input
+          className="fixed dark:bg-zinc-900 bottom-0 w-full max-w-md p-2 mb-8 border border-zinc-300 dark:border-zinc-800 rounded shadow-xl"
+          value={input}
+          placeholder="Say something..."
+          onChange={handleInputChange}
+        />
       </form>
     </div>
   );
 }
-
-export default Chatbot;
-
